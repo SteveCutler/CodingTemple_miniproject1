@@ -117,9 +117,12 @@ ColorGreen =  '\033[32m' # Green Text
 print("Welcome to your To-Do List App!")
 
 def listDisplay():
-    print("\nYour To-Do list now looks like:\n")
-    for i, element in enumerate(toDoList):
-        print("name:", element, " --- ", "due:", dueList[i], " --- ", "priority:", priorityList[i], " --- ", "status:", completionList[i])
+    
+    if bool(toDoList) != False:
+        for i, element in enumerate(toDoList):
+            print("name:", element, " --- ", "due:", dueList[i], " --- ", "priority:", priorityList[i], " --- ", "status:", completionList[i])
+    else:
+        print("There's Nothing here! Your To-Do list is empty :)")
     print("\n")
 
 def resetTaskVariables():
@@ -156,7 +159,8 @@ def addTask(task, dueDate="n/a", priority="n/a"):
 def viewTasks():
     print("\nOk let's pull up your To-Do List:\n")
     listDisplay()
-    pass
+    print("\n")
+
 
 def markAsComplete(task):
     global completionList
@@ -182,10 +186,33 @@ def delTask(task):
     global toDoList
     global dueList
     global priorityList
-    pass
+    global completionList
 
-def quit():
-    pass
+    x = 0
+    taskLower = task.lower()
+    
+    while x < len(toDoList):
+        if taskLower in toDoList[x].lower():
+            taskIndex = x
+            break
+        else:
+            print("Couldn't find, added 1 to x")
+            x +=1
+    else:
+        print(f"Task '{task}' not found on To-Do list. Are you sure you entered the right name?")
+
+    toDoList.pop(taskIndex)
+    dueList.pop(taskIndex)
+    priorityList.pop(taskIndex)
+    completionList.pop(taskIndex)
+
+    print(f"\nOk, the task '{task}' was succesfully removed from the list!")
+    print("Your To-Do list now looks like this:\n")
+    listDisplay()
+    print("\n")
+    
+    
+
 
 while True:
     print("Please make a selection from the following menu: (Feel free to use the item number or name, or both!)")
@@ -275,10 +302,11 @@ while True:
 
         elif userSelection.lower() == "delete a task" or userSelection.lower() == "4" or "4" in userSelection:
             print("Ok, lets remove a task.")
-            removeTask = input("Which task would you like to remove?").lower()
-            #converted to lowercase to reduce user error, remember to check for lowercase task on list
+            removeTaskLower = input("Which task would you like to remove?\n")
+            delTask(removeTaskLower)
+            
             #check input for character values
-            #function call
+            
 
         elif userSelection.lower() == "quit" or userSelection.lower() == "5" or "5" in userSelection:
             print("Thanks for stopping by, see you soon!")
