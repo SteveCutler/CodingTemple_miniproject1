@@ -96,3 +96,44 @@
 #     Optional Features (Bonus):
 #         If you feel adventurous, you can add extra features like task 
 #         priorities, due dates, or color-coding tasks based on their status.
+
+print("Welcome to the To-Do List App!")
+print("Please make a selection from the following menu: (Feel free to use the item number or name, but not both!)")
+print(" 1. Add a task\n 2. View tasks\n 3. Mark a task as complete\n 4. Delete a task\n 5. Quit")
+
+def addTask(task, dueDate="n/a", priority="0"):
+    #colorCoding
+    pass
+
+def viewTasks():
+    #colorCoding
+    pass
+
+def markAsComplete(task):
+    #colorCoding
+    pass
+
+def delTask(task):
+    pass
+
+def quit():
+    pass
+
+try:
+    userSelection = input("Which item would you like to select?\n")
+except ValueError:
+    print("Please make sure you enter a valid selection")
+else:
+    if userSelection.lower() == "add a task" or userSelection.lower() == "1":
+        print("you selected task 1")
+    elif userSelection.lower() == "view tasks" or userSelection.lower() == "2":
+        print("you selected task 2")
+    elif userSelection.lower() == "mark a task as complete" or userSelection.lower() == "3":
+        print("you selected task 3")
+    elif userSelection.lower() == "delete a task" or userSelection.lower() == "4":
+        print("you selected task 4")
+    elif userSelection.lower() == "quit" or userSelection.lower() == "5":
+        print("you selected task 5")
+    else:
+        print("Please make sure you select a valid list item!")
+    
