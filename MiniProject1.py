@@ -118,8 +118,6 @@ print("Welcome to your To-Do List App!")
 
 def listDisplay():
     print("\nYour To-Do list now looks like:\n")
-
-
     for i, element in enumerate(toDoList):
         print("name:", element, " --- ", "due:", dueList[i], " --- ", "priority:", priorityList[i], " --- ", "status:", completionList[i])
     print("\n")
@@ -129,61 +127,82 @@ def resetTaskVariables():
     taskDue=""
     taskPriority=""
 
+def changeColor(index):
+    global toDoList
+    global dueList
+    global priorityList
+    global completionList
+
+    toDoList[index] = toDoList[index].replace(ColorBlue, ColorGreen)
+    dueList[index] = dueList[index].replace(ColorBlue, ColorGreen)
+    priorityList[index] = priorityList[index].replace(ColorBlue, ColorGreen)
+    completionList[index] = completionList[index].replace(ColorBlue, ColorGreen)
+    print("Text Color Changed...")
+    
+
+def addTask(task, dueDate="n/a", priority="n/a"):
+    global toDoList
+    global dueList
+    global priorityList
+    global completionList
+
+    toDoList.append(ColorBlue + task + ColorReset)
+    dueList.append(ColorBlue + dueDate + ColorReset)
+    priorityList.append(ColorBlue + priority + ColorReset)
+    completionList.append(ColorBlue + "Incomplete" + ColorReset)
+
+    listDisplay()
+    
+def viewTasks():
+    print("\nOk let's pull up your To-Do List:\n")
+    listDisplay()
+    pass
+
+def markAsComplete(task):
+    global completionList
+    #What's the name of the Task you want to change to complete?
+    x = 0
+    
+    while x < len(toDoList):
+        if task in toDoList[x].lower():
+            taskIndex = x
+            break
+        else:
+            print("Couldn't find, added 1 to x")
+            x +=1
+
+    changeColor(taskIndex)
+    completionList[taskIndex] = completionList[taskIndex].replace("Incomplete", "Complete")
+
+    print(f"\nYou've succesfully changed task {toDoList[x]} from Incomplete to Complete!\n")
+    listDisplay()
+    print("\n")
+
+def delTask(task):
+    global toDoList
+    global dueList
+    global priorityList
+    pass
+
+def quit():
+    pass
+
 while True:
     print("Please make a selection from the following menu: (Feel free to use the item number or name, or both!)")
     print(" 1. Add a task\n 2. View tasks\n 3. Mark a task as complete\n 4. Delete a task\n 5. Quit")
 
-    def addTask(task, dueDate="n/a", priority="n/a"):
-        global toDoList
-        global dueList
-        global priorityList
-        global completionList
-
-        toDoList.append(ColorBlue + task + ColorReset)
-        dueList.append(ColorBlue + dueDate + ColorReset)
-        priorityList.append(ColorBlue + priority + ColorReset)
-        completionList.append(ColorBlue + "Incomplete" + ColorReset)
-
-        listDisplay()
-
-        # print(f"your task name is {task}")
-        # print(f"your task due date is {dueDate}")
-        # print(f"your task priority is {priority}")
-
-        #colorCoding
-        
-
-    def viewTasks():
-        #colorCoding
-        pass
-
-    def markAsComplete(task):
-        global toDoList
-        global dueList
-        global priorityList
-        #colorCoding
-        pass
-
-    def delTask(task):
-        global toDoList
-        global dueList
-        global priorityList
-        pass
-
-    def quit():
-        pass
-
     try:
         userSelection = input("Which item would you like to select?\n").strip()
         #check to make sure only one digit in selection
+
     except ValueError:
-        print("\nPlease make sure you enter a valid selection")
+        print("\nPlease make sure you enter a valid selection\n")
 
     else:
                 #check to make sure is all either digit or alpha else throw print statement
         if userSelection.lower() == "add a task" or userSelection.lower() == "1" or "1" in userSelection:
 
-            print("Ok, lets add a new task!")
+            print("Ok, lets add a new task!\n")
             
             #task creation variable input
             taskTitle = input("Please enter a title for your new task:\n").strip()
@@ -248,20 +267,24 @@ while True:
         elif userSelection.lower() == "mark a task as complete" or userSelection.lower() == "3" or "3" in userSelection:
             print("Great job on completing one of your tasks! Lets scratch it off the list")
             finishedTaskLower = input("Which task did you complete?\n").lower()
+            markAsComplete(finishedTaskLower)
             #taking input taskname as lowercase to reduce user error - remember to check for task name lowercase
             #check finished task name for correct values using try except
             #change color to green
             #function call
+
         elif userSelection.lower() == "delete a task" or userSelection.lower() == "4" or "4" in userSelection:
             print("Ok, lets remove a task.")
             removeTask = input("Which task would you like to remove?").lower()
             #converted to lowercase to reduce user error, remember to check for lowercase task on list
             #check input for character values
             #function call
+
         elif userSelection.lower() == "quit" or userSelection.lower() == "5" or "5" in userSelection:
             print("Thanks for stopping by, see you soon!")
             break
             #quit program somehow
+        
         else:
             print("Please make sure you select a valid list item!")
         
